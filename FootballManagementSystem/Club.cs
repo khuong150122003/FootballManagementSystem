@@ -1,132 +1,103 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FootballManagementSystem
 {
- 
-        public delegate void ActionDelegate();
-        class Club<T> : IEnumerable<T> where T : IPlayer
+    public delegate void ActionDelegate();
+
+    class Club<T> : IEnumerable<T> where T : IPlayer
+    {
+        public Dictionary<int, T> PlayerList = new Dictionary<int, T>();
+
+        public void Add(T t)
         {
-            event ActionDelegate AttackEvent;
-            event ActionDelegate DefenseEvent;
-            public Dictionary<int, T> PlayerList = new Dictionary<int, T>();
-
-            public void Add(T t)
+            Console.Write("Input name: ");
+            t.Name = Console.ReadLine();
+            while (true)
             {
-                Console.Write("Input name: ");
-                t.Name = Console.ReadLine();
-                while (true)
+                Console.Write("Input age: ");
+                try
                 {
-                    Console.Write("Input age: ");
-                    try
-                    {
-                        t.Age = int.Parse(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+                    t.Age = int.Parse(Console.ReadLine());
+                    break;
                 }
-                while (true)
+                catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+            }
+            while (true)
+            {
+                Console.Write("Input attack: ");
+                try
                 {
-                    Console.Write("Input attack: ");
-                    try
-                    {
-                        t.Attack = int.Parse(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+                    t.Attack = int.Parse(Console.ReadLine());
+                    break;
                 }
-                while (true)
+                catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+            }
+            while (true)
+            {
+                Console.Write("Input defense: ");
+                try
                 {
-                    Console.Write("Input defense: ");
-                    try
-                    {
-                        t.Defense = int.Parse(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+                    t.Defense = int.Parse(Console.ReadLine());
+                    break;
                 }
-                while (true)
+                catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+            }
+            while (true)
+            {
+                Console.Write("Input stamina: ");
+                try
                 {
-                    Console.Write("Input stamina: ");
-                    try
-                    {
-                        t.Stamina = int.Parse(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+                    t.Stamina = int.Parse(Console.ReadLine());
+                    break;
                 }
-                while (true)
+                catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+            }
+            while (true)
+            {
+                Console.Write("Input speed: ");
+                try
                 {
-                    Console.Write("Input speed: ");
-                    try
-                    {
-                        t.Speed = int.Parse(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+                    t.Speed = int.Parse(Console.ReadLine());
+                    break;
                 }
-                while (true)
+                catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+            }
+            while (true)
+            {
+                Console.Write("Input power: ");
+                try
                 {
-                    Console.Write("Input power: ");
-                    try
-                    {
-                        t.Power = int.Parse(Console.ReadLine());
-                        break;
-                    }
-                    catch (Exception ex) { Console.WriteLine("Wrong format!"); }
+                    t.Power = int.Parse(Console.ReadLine());
+                    break;
                 }
-                PlayerList.Add(PlayerList.Count + 1, t);
-                float avePoint = (t.Attack + t.Defense + t.Power + t.Speed + t.Stamina) / 5.0f;
-                if (avePoint >= 80)
-                {
-                    AttackEvent += new ActionDelegate(t.GetInfo);
-                }
-                else if (60 <= avePoint && avePoint < 80)
-                {
-                    DefenseEvent += new ActionDelegate(t.GetInfo);
-                }
+                catch (Exception ex) { Console.WriteLine("Wrong format!"); }
             }
 
-            public IEnumerator<T> GetEnumerator()
-            {
-                foreach (T t in PlayerList.Values)
-                {
-                    yield return t;
-                }
-            }
-
-        public void RaiseAttackEvent()
-            {
-                if (AttackEvent != null)
-                {
-                    AttackEvent();
-                }
-                else
-                {
-                    Console.WriteLine("No players");
-                }
-            }
-
-            public void RaiseDefenseEvent()
-            {
-                if (DefenseEvent != null)
-                {
-                    DefenseEvent();
-                }
-                else
-                {
-                    Console.WriteLine("No players");
-                }
-            }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+            PlayerList.Add(PlayerList.Count + 1, t);
+        }
+        public void DeletePlayer(T player)
         {
-            throw new NotImplementedException();
+            int index = PlayerList.Values.ToList().IndexOf(player);
+            if (index >= 0)
+            {
+                PlayerList.Remove(index + 1);
+            }
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            foreach (T t in PlayerList.Values)
+            {
+                yield return t;
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
-    }
-
+}
